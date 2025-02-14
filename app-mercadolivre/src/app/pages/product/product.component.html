@@ -1,0 +1,9 @@
+<div *ngFor="let product of products">
+  <p>Produto: {{ product.product }}</p>
+  <p>Name: {{ product.name }}</p>
+  <p>Price: {{ product.price }}</p>
+  <p>Assessment: {{ product.assessment }}</p>
+  <p><a [href]="product.link">Link do produto</a></p>
+
+  <br>
+</div>
