@@ -1,0 +1,6 @@
+<input type="text" [(ngModel)]="produto" placeholder="Digite o produto" />
+<button (click)="runScraper()" [disabled]="loading">
+  {{ loading ? 'Buscando...' : 'Buscar Produto' }}
+</button>
+<button routerLink="/product">Produtos</button>
+<p *ngIf="message">{{ message }}</p>

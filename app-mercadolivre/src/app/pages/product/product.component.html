@@ -1,9 +1,32 @@
+<div class="grid-container">
+  <div class="product-card" *ngFor="let product of products">
+    <img [src]="product.image" alt="imagem">
+    <h5>{{ product.nome}}</h5>
+    <p class="price">{{ product.price }}</p>
+    <p class="price">Avaliação {{ product.assessment}}</p>
+    <a [href]="product.link" target="_blank" class="buy-button">Ver Produto</a>
+  </div>
+</div>
+
+<div class="pagination">
+  <button (click)="goToPreviousPage()" [disabled]="currentPage === 0">Anterior</button>
+  <button (click)="goToNextPage()" [disabled]="currentPage >= totalPages - 1">Próximo</button>
+</div>
+
+
+
+
+
+
+<!-- <button routerLink="/scraper">Scraper</button>
+
 <div *ngFor="let product of products">
   <p>Produto: {{ product.product }}</p>
   <p>Name: {{ product.name }}</p>
   <p>Price: {{ product.price }}</p>
   <p>Assessment: {{ product.assessment }}</p>
   <p><a [href]="product.link">Link do produto</a></p>
+  <img [src]="product.image" alt="Imagem base64" />
 
   <br>
-</div>
+</div> -->
