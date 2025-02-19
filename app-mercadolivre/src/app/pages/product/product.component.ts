@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Product } from '../../../models/Product';
 import { ProductService } from '../../../services/product/product.service';
-import { response } from 'express';
 
 @Component({
   selector: 'app-product',
@@ -11,20 +10,53 @@ import { response } from 'express';
 })
 export class ProductComponent {
   products: Product[] = [];
+  filteredProductsList: Product[] = [];
+
   currentPage = 0;
-  itemsPerPage = 15;
+  itemsPerPage = 30;
 
-  constructor(private productService: ProductService){}
+  minPrice: number | null = null;
+  maxPrice: number | null = null;
+  searchTerm: string = '';
+  isFiltersVisible = false;
 
-  ngOnInit(): void{
+  constructor(private productService: ProductService) {}
+
+  ngOnInit(): void {
     this.productService.GetProducts().subscribe(response => {
       this.products = response;
-    })
+      this.filteredProductsList = [...this.products];
+    });
   }
 
   get totalPages(): number {
-    return Math.ceil(this.products.length / this.itemsPerPage);
+    return Math.ceil(this.filteredProductsList.length / this.itemsPerPage);
   }
+
+  paginatedProducts() {
+    const startIndex = this.currentPage * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.filteredProductsList.slice(startIndex, endIndex);
+  }
+
+  applyFilters() {
+    this.filteredProductsList = this.products.filter(product => {
+      const price = parseFloat(product.price.replace('R$', '').trim().replace(/\./g, '').replace(',', '.'));
+
+      const meetsMinPrice = this.minPrice !== null ? price >= this.minPrice : true;
+      const meetsMaxPrice = this.maxPrice !== null ? price <= this.maxPrice : true;
+
+      const meetsSearchTerm = this.searchTerm
+        ? product.nome.toLowerCase().includes(this.searchTerm.toLowerCase())
+        : true;
+
+      return meetsMinPrice && meetsMaxPrice && meetsSearchTerm;
+    });
+
+    this.currentPage = 0;
+  }
+
+
   goToPreviousPage() {
     if (this.currentPage > 0) {
       this.currentPage--;
@@ -37,5 +69,15 @@ export class ProductComponent {
     }
   }
 
+  clearFilters() {
+    this.minPrice = null;
+    this.maxPrice = null;
+    this.searchTerm = ''; // Limpa o termo de pesquisa
+    this.filteredProductsList = [...this.products];
+    this.currentPage = 0;
+  }
 
+  toggleFilters() {
+    this.isFiltersVisible = !this.isFiltersVisible;
+  }
 }

@@ -3,7 +3,8 @@
   background-color: #1493fb;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 5vw;
   padding: 0;
   margin: 0;
   font-family: 'Montserrat', sans-serif;
@@ -13,21 +14,21 @@
 .nav-item {
   display: flex;
   align-items: center;
-  height: 8vh;
-}
-
-.mundo {
-  height: 15vh;
-}
-
-.nav-item p {
-  font-size: 30pt;
-  color: white;
-  margin-top: 1.5vh;
 }
 a{
   text-decoration: none;
   color: #000000;
   font-size: 30pt;
   font-weight: bold;
+}
+.nav-button{
+  height: 10vh;
+  width: 10vw;
+  background-color: #1493fb;
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+}
+.nav-button:hover {
+  background-color: #8dc1eb;
 }
